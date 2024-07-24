@@ -1,21 +1,28 @@
 import { useState } from "react";
 import Feedback from "./components/Feedback/Feedback";
 import Options from "./components/Options/Options";
+import Notification from "./components/Notification/Notification";
 import "./App.css";
 
 const App = () => {
-  const [reviews, setReviews] = useState({
+  const [feedback, setReviews] = useState({
     good: 0,
     neutral: 0,
     bad: 0,
   });
+  const [showFeedbacks, setShowFeedbacks] = useState(false);
 
-  const total = reviews.good + reviews.neutral + reviews.bad;
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
 
-  const onReviewAdd = (reviewsName) => {
-    console.log("click", reviewsName);
-    setReviews({ ...reviews, [reviewsName]: reviews[reviewsName] + 1 });
+  const updateFeedback = (feedbackType) => {
+    console.log("click", feedbackType);
+    setReviews({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
+    setShowFeedbacks(!showFeedbacks);
   };
+
+  // const toggleShowFeedbacks = () => {
+  //   setShowFeedbacks(!showFeedbacks);
+  // };
 
   return (
     <div>
@@ -25,14 +32,16 @@ const App = () => {
         options below.
       </p>
       <Options
-        onReviewAdd={onReviewAdd}
+        updateFeedback={updateFeedback}
         // onResetAdd={onResetAdd}
       />
+      <Notification />
       <Feedback
-        good={reviews.good}
-        neutral={reviews.neutral}
-        bad={reviews.bad}
-        total={total}
+        good={feedback.good}
+        neutral={feedback.neutral}
+        bad={feedback.bad}
+        totalFeedback={totalFeedback}
+        showFeedbacks={showFeedbacks}
       />
     </div>
   );

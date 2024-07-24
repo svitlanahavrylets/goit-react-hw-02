@@ -1,18 +1,18 @@
-const Options = ({ onReviewAdd, onResetAdd }) => {
+const Options = ({ updateFeedback, onResetAdd }) => {
   return (
     <>
-      <button type="button" onClick={() => onReviewAdd("good")}>
+      <button type="button" onClick={() => updateFeedback("good")}>
         Good
       </button>
-      <button type="button" onClick={() => onReviewAdd("neutral")}>
+      <button type="button" onClick={() => updateFeedback("neutral")}>
         Neutral
       </button>
-      <button type="button" onClick={() => onReviewAdd("bad")}>
+      <button type="button" onClick={() => updateFeedback("bad")}>
         Bad
       </button>
-      <button type="button" onClick={() => onResetAdd("reset")}>
+      {/* <button type="button" onClick={() => onResetAdd("reset")}>
         Reset
-      </button>
+      </button> */}
     </>
   );
 };
