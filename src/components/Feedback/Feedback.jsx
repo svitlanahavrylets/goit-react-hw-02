@@ -1,13 +1,13 @@
-const Feedback = ({ good, neutral, bad, totalFeedback, showFeedbacks }) => {
+const Feedback = ({ good, neutral, bad, totalFeedback, positiveFeedback }) => {
   return (
-    showFeedbacks && (
+    totalFeedback >= 1 && (
       <div>
         <ul>
           <li>Good: {good}</li>
           <li>Neutral: {neutral}</li>
           <li>Bad: {bad}</li>
           <li>Total: {totalFeedback}</li>
-          <li>Positive: 80%</li>
+          <li>Positive: {positiveFeedback}%</li>
         </ul>
       </div>
     )

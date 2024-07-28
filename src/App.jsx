@@ -1,47 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Description from "./components/Description/Description";
 import Feedback from "./components/Feedback/Feedback";
 import Options from "./components/Options/Options";
 import Notification from "./components/Notification/Notification";
 import "./App.css";
 
 const App = () => {
-  const [feedback, setReviews] = useState({
+  const feedbackData = {
     good: 0,
     neutral: 0,
     bad: 0,
+  };
+  const [feedback, setFeedback] = useState(() => {
+    const feedbackDataStorage = localStorage.getItem("feedbackValue");
+    return feedbackDataStorage ? JSON.parse(feedbackDataStorage) : feedbackData;
   });
-  const [showFeedbacks, setShowFeedbacks] = useState(false);
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
 
   const updateFeedback = (feedbackType) => {
     console.log("click", feedbackType);
-    setReviews({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
-    setShowFeedbacks(!showFeedbacks);
+    setFeedback({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
   };
 
-  // const toggleShowFeedbacks = () => {
-  //   setShowFeedbacks(!showFeedbacks);
-  // };
+  const onResetAdd = () => {
+    setFeedback(feedbackData);
+  };
+
+  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+
+  useEffect(() => {
+    localStorage.setItem("feedbackValue", JSON.stringify(feedback));
+  }, [feedback]);
 
   return (
     <div>
-      <h1>Sip Happens Café</h1>
-      <p>
-        Please leave your feedback about our service by selecting one of the
-        options below.
-      </p>
+      <Description />
       <Options
         updateFeedback={updateFeedback}
-        // onResetAdd={onResetAdd}
+        onResetAdd={onResetAdd}
+        totalFeedback={totalFeedback}
       />
-      <Notification />
+      <Notification totalFeedback={totalFeedback} />
       <Feedback
         good={feedback.good}
         neutral={feedback.neutral}
         bad={feedback.bad}
         totalFeedback={totalFeedback}
-        showFeedbacks={showFeedbacks}
+        positiveFeedback={positiveFeedback}
       />
     </div>
   );
