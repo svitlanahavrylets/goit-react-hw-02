@@ -1,0 +1,13 @@
+.optionsBtn {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.feedbackBtn {
+  border: 1px solid #c6d1e0;
+  border-radius: 42px;
+}
+.feedbackBtn:focus {
+  overflow: hidden;
+  outline: transparent;
+}
